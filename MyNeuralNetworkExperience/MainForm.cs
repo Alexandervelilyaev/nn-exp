@@ -17,5 +17,16 @@ namespace MyNeuralNetworkExperience
             AboutForm aboutForm = new AboutForm();
             aboutForm.ShowDialog();
         }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewForm newForm = new NewForm();
+            newForm.ShowDialog();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: use openFileDialog
+        }
     }
 }
