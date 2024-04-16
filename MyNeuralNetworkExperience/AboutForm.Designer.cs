@@ -95,6 +95,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "AboutForm";
             Text = "About";
+            Load += AboutForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

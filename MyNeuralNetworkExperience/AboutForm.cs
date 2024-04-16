@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace MyNeuralNetworkExperience
+﻿namespace MyNeuralNetworkExperience
 {
     public partial class AboutForm : Form
     {
@@ -20,6 +10,11 @@ namespace MyNeuralNetworkExperience
         private void okButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+            versionLabel.Text = $"Version: {Application.ProductVersion}";
         }
     }
 }
