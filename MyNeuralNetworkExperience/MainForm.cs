@@ -137,17 +137,15 @@ namespace MyNeuralNetworkExperience
                     .Where(n => synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
                     .ToList();
 
-                foreach (Neuron nextLayerNeuron in nextLayerNeurons)
+                for (int i = 0; i < nextLayerNeurons.Count; i++)
                 {
+                    Neuron nextLayerNeuron = nextLayerNeurons[i];
                     nextLayerNeuron.X = x + radius * 2 + padding;
+                    nextLayerNeuron.Y = y + i * (radius * 2 + padding);
 
                     if (nextLayerNeurons.Count == 1)
                     {
-                        nextLayerNeuron.Y = calculatedHeight / 2 + y - radius;
-                    }
-                    else
-                    {
-                        nextLayerNeuron.Y = y;
+                        nextLayerNeuron.Y += calculatedHeight / 2 - radius;
                     }
 
                     drawNode(nextLayerNeuron, Color.Red, bitmap);
@@ -160,7 +158,10 @@ namespace MyNeuralNetworkExperience
             {
                 var srcNeuron = renderedNeurons.Where(n => synapse.SourceId == n.Id).FirstOrDefault();
                 var dstNeuron = renderedNeurons.Where(n => synapse.DestinationId == n.Id).FirstOrDefault();
-                DrawLine(srcNeuron.X + radius, srcNeuron.Y + radius / 2, dstNeuron.X, dstNeuron.Y + radius / 2, Color.Green, bitmap);
+                if (srcNeuron != null && dstNeuron != null)
+                {
+                    DrawLine(srcNeuron.X + radius, srcNeuron.Y + radius / 2, dstNeuron.X, dstNeuron.Y + radius / 2, Color.Green, bitmap);
+                }
             }
 
             pictureBox1.Image = bitmap;
@@ -345,7 +346,7 @@ namespace MyNeuralNetworkExperience
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            NeuralNetwork nn = CreateNetworkSmall();
+            NeuralNetwork nn = CreateNetworkBig();
             VisualizeTopology(nn);
 
             Console.WriteLine("");
