@@ -35,7 +35,9 @@
             exitToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
+            pictureBox1 = new PictureBox();
             mainMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // mainMenuStrip
@@ -89,11 +91,20 @@
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(29, 44);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1124, 580);
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 661);
+            Controls.Add(pictureBox1);
             Controls.Add(mainMenuStrip);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MainMenuStrip = mainMenuStrip;
@@ -103,6 +114,7 @@
             Load += MainForm_Load;
             mainMenuStrip.ResumeLayout(false);
             mainMenuStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -116,5 +128,6 @@
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem newToolStripMenuItem;
         private ToolStripMenuItem openToolStripMenuItem;
+        private PictureBox pictureBox1;
     }
 }

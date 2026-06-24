@@ -31,6 +31,13 @@ namespace MyNeuralNetworkExperience
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            var bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            //for (int i = 0; i < Math.Min(bitmap.Height, bitmap.Width); i++)
+            //{
+            //    bitmap.SetPixel(i, i, Color.Red);
+            //}
+
             List<Neuron> neuronList = new List<Neuron>();
             List<Synapse> synapseList = new List<Synapse>();
 
@@ -73,6 +80,29 @@ namespace MyNeuralNetworkExperience
             NeuralNetwork nn = new NeuralNetwork();
             nn.Neurons = neuronList;
             nn.Synapses = synapseList;
+
+            // TODO: Move this select to the NeuralNetwork class
+            List<Neuron> inputNeurons = nn.Neurons
+                .Where(n => !nn.Synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
+                .ToList();
+
+
+
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                using (Pen pen = new Pen(Color.Red, 2))
+                {
+                    // 4. Draw the circle (X, Y, Width, Height)
+                    // Equal width and height creates a perfect circle
+                    var radius = 300;
+                    g.DrawEllipse(pen, 50, 50, radius, radius);
+                }
+            }
+
+            pictureBox1.Image = bitmap;
+
 
             Console.WriteLine("");
         }
