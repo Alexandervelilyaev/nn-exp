@@ -214,6 +214,135 @@ namespace MyNeuralNetworkExperience
             return nn;
         }
 
+        private NeuralNetwork CreateNetworkBig()
+        {
+            List<Neuron> neuronList = new List<Neuron>();
+            List<Synapse> synapseList = new List<Synapse>();
+
+            Neuron n1 = new Neuron()
+            {
+                Id = 1
+            };
+            neuronList.Add(n1);
+
+            Neuron n2 = new Neuron()
+            {
+                Id = 2
+            };
+            neuronList.Add(n2);
+
+            Neuron n3 = new Neuron()
+            {
+                Id = 3
+            };
+            neuronList.Add(n3);
+
+            Neuron n4 = new Neuron()
+            {
+                Id = 4
+            };
+            neuronList.Add(n4);
+
+            Neuron n5 = new Neuron()
+            {
+                Id = 5
+            };
+            neuronList.Add(n5);
+
+            Neuron n6 = new Neuron()
+            {
+                Id = 6
+            };
+            neuronList.Add(n6);
+
+            Synapse s1 = new Synapse()
+            {
+                Id = 1,
+                SourceId = 1,
+                DestinationId = 3,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s1);
+
+            Synapse s2 = new Synapse()
+            {
+                Id = 2,
+                SourceId = 1,
+                DestinationId = 4,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s2);
+
+            Synapse s3 = new Synapse()
+            {
+                Id = 3,
+                SourceId = 1,
+                DestinationId = 5,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s3);
+
+            Synapse s4 = new Synapse()
+            {
+                Id = 4,
+                SourceId = 2,
+                DestinationId = 3,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s4);
+
+            Synapse s5 = new Synapse()
+            {
+                Id = 5,
+                SourceId = 2,
+                DestinationId = 4,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s5);
+
+            Synapse s6 = new Synapse()
+            {
+                Id = 6,
+                SourceId = 2,
+                DestinationId = 5,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s6);
+
+            Synapse s7 = new Synapse()
+            {
+                Id = 7,
+                SourceId = 3,
+                DestinationId = 6,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s7);
+
+            Synapse s8 = new Synapse()
+            {
+                Id = 8,
+                SourceId = 4,
+                DestinationId = 6,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s8);
+
+            Synapse s9 = new Synapse()
+            {
+                Id = 9,
+                SourceId = 5,
+                DestinationId = 6,
+                Weight = new Random().NextDouble()
+            };
+            synapseList.Add(s9);
+
+            NeuralNetwork nn = new NeuralNetwork();
+            nn.Neurons = neuronList;
+            nn.Synapses = synapseList;
+
+            return nn;
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             NeuralNetwork nn = CreateNetworkSmall();
