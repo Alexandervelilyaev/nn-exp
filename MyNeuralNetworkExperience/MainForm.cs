@@ -4,6 +4,10 @@ namespace MyNeuralNetworkExperience
 {
     public partial class MainForm : Form
     {
+        private List<Neuron> renderedNeurons { get; set; }
+        private readonly int radius = 20;
+        private readonly int padding = 5;
+
         public MainForm()
         {
             InitializeComponent();
@@ -78,14 +82,26 @@ namespace MyNeuralNetworkExperience
             }
         }
 
+        private void drawNode(Neuron neuron, Color color, Bitmap image)
+        {
+            if (!renderedNeurons.Contains(neuron))
+            {
+                DrawCircle(neuron.X, neuron.Y, radius, color, image);
+                DrawText(neuron.Id.ToString(), neuron.X + radius / 2, neuron.Y + radius / 2, Color.Blue, image);
+                renderedNeurons.Add(neuron);
+            }
+        }
+
         private void VisualizeTopology(NeuralNetwork nn)
         {
-            List<int> renderedIds = new List<int>();
+            renderedNeurons = new List<Neuron>();
 
             // TODO: Move this select to the NeuralNetwork class
             List<Neuron> inputNeurons = nn.Neurons
                 .Where(n => !nn.Synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
                 .ToList();
+
+            int calculatedHeight = inputNeurons.Count * (radius * 2) + (inputNeurons.Count - 1) * padding;
 
             var bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
@@ -99,19 +115,14 @@ namespace MyNeuralNetworkExperience
                 bitmap.SetPixel(0, i, Color.Black);
             }
 
-            int padding = 5;
-            int radius = 20;
             int x = padding;
             int y = padding;
 
             foreach (Neuron neuron in inputNeurons)
             {
-                if (!renderedIds.Contains(neuron.Id))
-                {
-                    DrawCircle(x, y, radius, Color.Green, bitmap);
-                    DrawText(neuron.Id.ToString(), x + radius / 2, y + radius / 2, Color.Blue, bitmap);
-                    renderedIds.Add(neuron.Id);
-                }
+                neuron.X = x;
+                neuron.Y = y;
+                drawNode(neuron, Color.Green, bitmap);
 
                 // TODO: Move this select to the NeuralNetwork class
                 var synapses = nn.Synapses.Where(s => s.SourceId == neuron.Id).ToList();
@@ -123,20 +134,29 @@ namespace MyNeuralNetworkExperience
 
                 foreach (Neuron nextLayerNeuron in nextLayerNeurons)
                 {
-                    var xx = x + radius * 2 + padding;
+                    nextLayerNeuron.X = x + radius * 2 + padding;
 
-                    if (!renderedIds.Contains(nextLayerNeuron.Id))
+                    if (nextLayerNeurons.Count == 1)
                     {
-                        DrawCircle(xx, y, radius, Color.Red, bitmap);
-                        DrawText(nextLayerNeuron.Id.ToString(), xx + radius / 2, y + radius / 2, Color.Blue, bitmap);
-                        renderedIds.Add(nextLayerNeuron.Id);
+                        nextLayerNeuron.Y = calculatedHeight / 2 + y - radius;
+                    }
+                    else
+                    {
+                        nextLayerNeuron.Y = y;
                     }
 
-                    //DrawLine(x, y, xx, y, Color.Green, bitmap);
+                    drawNode(nextLayerNeuron, Color.Red, bitmap);
                 }
 
                 y += padding + radius * 2;
             }
+
+            //foreach (Synapse synapse in nn.Synapses)
+            //{
+            //    var srcNeuron = renderedNeurons.Where(n => synapse.SourceId == n.Id).FirstOrDefault();
+            //    var dstNeuron = renderedNeurons.Where(n => synapse.DestinationId == n.Id).FirstOrDefault();
+            //    DrawLine(srcNeuron.X + radius, srcNeuron.Y + radius / 2, dstNeuron.X, dstNeuron.Y + radius / 2, Color.Green, bitmap);
+            //}
 
             pictureBox1.Image = bitmap;
         }
