@@ -5,6 +5,7 @@ namespace MyNeuralNetworkExperience
     public partial class MainForm : Form
     {
         private List<Neuron> renderedNeurons { get; set; }
+        private int calculatedHeight { get; set; }
         private readonly int radius = 20;
         private readonly int padding = 5;
 
@@ -97,6 +98,33 @@ namespace MyNeuralNetworkExperience
             }
         }
 
+        private void drawConnectedNodes(Neuron neuron, NeuralNetwork nn, Bitmap image)
+        {
+            // TODO: Move this select to the NeuralNetwork class
+            var synapses = nn.Synapses.Where(s => s.SourceId == neuron.Id).ToList();
+
+            // TODO: Move this select to the NeuralNetwork class
+            List<Neuron> nextLayerNeurons = nn.Neurons
+                .Where(n => synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
+                .ToList();
+
+            for (int i = 0; i < nextLayerNeurons.Count; i++)
+            {
+                Neuron nextLayerNeuron = nextLayerNeurons[i];
+                int size = radius * 2 + padding;
+                nextLayerNeuron.X = neuron.X + size;
+                nextLayerNeuron.Y = neuron.Y + i * size;
+
+                if (nextLayerNeurons.Count == 1)
+                {
+                    nextLayerNeuron.Y += calculatedHeight / 2 - radius;
+                }
+
+                drawNode(nextLayerNeuron, Color.Red, image);
+                drawConnectedNodes(nextLayerNeuron, nn, image);
+            }
+        }
+
         private void VisualizeTopology(NeuralNetwork nn)
         {
             renderedNeurons = new List<Neuron>();
@@ -106,7 +134,7 @@ namespace MyNeuralNetworkExperience
                 .Where(n => !nn.Synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
                 .ToList();
 
-            int calculatedHeight = inputNeurons.Count * (radius * 2) + (inputNeurons.Count - 1) * padding;
+            calculatedHeight = inputNeurons.Count * (radius * 2) + (inputNeurons.Count - 1) * padding;
 
             var bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
@@ -128,28 +156,7 @@ namespace MyNeuralNetworkExperience
                 neuron.X = x;
                 neuron.Y = y;
                 drawNode(neuron, Color.Green, bitmap);
-
-                // TODO: Move this select to the NeuralNetwork class
-                var synapses = nn.Synapses.Where(s => s.SourceId == neuron.Id).ToList();
-
-                // TODO: Move this select to the NeuralNetwork class
-                List<Neuron> nextLayerNeurons = nn.Neurons
-                    .Where(n => synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
-                    .ToList();
-
-                for (int i = 0; i < nextLayerNeurons.Count; i++)
-                {
-                    Neuron nextLayerNeuron = nextLayerNeurons[i];
-                    nextLayerNeuron.X = x + radius * 2 + padding;
-                    nextLayerNeuron.Y = y + i * (radius * 2 + padding);
-
-                    if (nextLayerNeurons.Count == 1)
-                    {
-                        nextLayerNeuron.Y += calculatedHeight / 2 - radius;
-                    }
-
-                    drawNode(nextLayerNeuron, Color.Red, bitmap);
-                }
+                drawConnectedNodes(neuron, nn, bitmap);
 
                 y += padding + radius * 2;
             }
