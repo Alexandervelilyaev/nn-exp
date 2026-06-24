@@ -166,7 +166,7 @@ namespace MyNeuralNetworkExperience
             pictureBox1.Image = bitmap;
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private NeuralNetwork CreateNetworkSmall()
         {
             List<Neuron> neuronList = new List<Neuron>();
             List<Synapse> synapseList = new List<Synapse>();
@@ -211,6 +211,12 @@ namespace MyNeuralNetworkExperience
             nn.Neurons = neuronList;
             nn.Synapses = synapseList;
 
+            return nn;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            NeuralNetwork nn = CreateNetworkSmall();
             VisualizeTopology(nn);
 
             Console.WriteLine("");
