@@ -85,7 +85,7 @@ namespace MyNeuralNetworkExperience
 
         private void drawNode(Neuron neuron, Color color, Bitmap image)
         {
-            if (!renderedNeurons.Select(n=>n.Id).Contains(neuron.Id))
+            if (!renderedNeurons.Select(n => n.Id).Contains(neuron.Id))
             {
                 DrawCircle(neuron.X, neuron.Y, radius, color, image);
                 DrawText(neuron.Id.ToString(), neuron.X + radius / 2, neuron.Y + radius / 2, Color.Blue, image);
