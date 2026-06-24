@@ -65,6 +65,19 @@ namespace MyNeuralNetworkExperience
             }
         }
 
+        private void DrawLine(int x1, int y1, int x2, int y2, Color color, Bitmap image)
+        {
+            using (Graphics g = Graphics.FromImage(image))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+                using (Pen pen = new Pen(color, 2))
+                {
+                    g.DrawLine(pen, x1, y1, x2, y2);
+                }
+            }
+        }
+
         private void VisualizeTopology(NeuralNetwork nn)
         {
             List<int> renderedIds = new List<int>();
@@ -91,7 +104,6 @@ namespace MyNeuralNetworkExperience
             int x = padding;
             int y = padding;
 
-
             foreach (Neuron neuron in inputNeurons)
             {
                 if (!renderedIds.Contains(neuron.Id))
@@ -111,13 +123,16 @@ namespace MyNeuralNetworkExperience
 
                 foreach (Neuron nextLayerNeuron in nextLayerNeurons)
                 {
+                    var xx = x + radius * 2 + padding;
+
                     if (!renderedIds.Contains(nextLayerNeuron.Id))
                     {
-                        var xx = x + radius * 2 + padding;
                         DrawCircle(xx, y, radius, Color.Red, bitmap);
                         DrawText(nextLayerNeuron.Id.ToString(), xx + radius / 2, y + radius / 2, Color.Blue, bitmap);
                         renderedIds.Add(nextLayerNeuron.Id);
                     }
+
+                    //DrawLine(x, y, xx, y, Color.Green, bitmap);
                 }
 
                 y += padding + radius * 2;
