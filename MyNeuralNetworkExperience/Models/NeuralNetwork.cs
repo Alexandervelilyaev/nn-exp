@@ -40,6 +40,17 @@
             return synapses;
         }
 
+        public List<Neuron> GetNextLayerNeurons(Neuron neuron)
+        {
+            var synapses = GetSynapsesByNeuron(neuron);
+
+            List<Neuron> nextLayerNeurons = Neurons
+                .Where(n => synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
+                .ToList();
+
+            return nextLayerNeurons;
+        }
+
         public List<double> ProcessData(List<double> data)
         {
             List<double> outputValues = new List<double>();
