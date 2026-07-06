@@ -42,8 +42,16 @@
 
         public List<double> ProcessData(List<double> data)
         {
-            // TODO: Implement this method
-            return data;
+            List<double> outputValues = new List<double>();
+            List<Neuron> inputNeurons = GetInputNeurons();
+            int inputCount = Math.Min(data.Count, inputNeurons.Count);
+            for (int i = 0; i < inputCount; i++)
+            {
+                Neuron inputNeuron = inputNeurons[i];
+                double inputValue = data[i];
+            }
+
+            return outputValues;
         }
     }
 }
