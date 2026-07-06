@@ -35,6 +35,7 @@ namespace MyNeuralNetworkExperience
 
             NeuralNetwork nn = CreateNetworkBig();
             currentNetwork = nn;
+            DrawParameters(currentNetwork);
             VisualizeTopology(currentNetwork);
         }
 
@@ -59,14 +60,19 @@ namespace MyNeuralNetworkExperience
             {
                 if (isOK)
                 {
-                    nameLabel.Text = "Name: " + currentNetwork.Name;
-                    createdAtLabel.Text = "Created At: " + currentNetwork.CreatedAt.ToString();
-                    updatedAtLabel.Text = "Updated At: " + currentNetwork.UpdatedAt.ToString();
-                    epochLabel.Text = "Epoch: " + currentNetwork.Epoch.ToString();
-                    iterationLabel.Text = "Iteration: " + currentNetwork.Iteration.ToString();
+                    DrawParameters(currentNetwork);
                     VisualizeTopology(currentNetwork);
                 }
             }
+        }
+
+        private void DrawParameters(NeuralNetwork nn)
+        {
+            nameLabel.Text = "Name: " + nn.Name;
+            createdAtLabel.Text = "Created At: " + nn.CreatedAt.ToString();
+            updatedAtLabel.Text = "Updated At: " + nn.UpdatedAt.ToString();
+            epochLabel.Text = "Epoch: " + nn.Epoch.ToString();
+            iterationLabel.Text = "Iteration: " + nn.Iteration.ToString();
         }
 
         private void DrawCircle(int x, int y, int radius, Color color, Bitmap image)
