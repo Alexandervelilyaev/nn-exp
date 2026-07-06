@@ -31,6 +31,15 @@
             return inputNeurons;
         }
 
+        public List<Synapse> GetSynapsesByNeuron(Neuron neuron)
+        {
+            List<Synapse> synapses = Synapses
+                .Where(s => s.SourceId == neuron.Id)
+                .ToList();
+
+            return synapses;
+        }
+
         public List<double> ProcessData(List<double> data)
         {
             // TODO: Implement this method

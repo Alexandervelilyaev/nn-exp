@@ -139,8 +139,7 @@ namespace MyNeuralNetworkExperience
 
         private void drawConnectedNodes(Neuron neuron, NeuralNetwork nn, Bitmap image)
         {
-            // TODO: Move this select to the NeuralNetwork class
-            var synapses = nn.Synapses.Where(s => s.SourceId == neuron.Id).ToList();
+            var synapses = nn.GetSynapsesByNeuron(neuron);
 
             // TODO: Move this select to the NeuralNetwork class
             List<Neuron> nextLayerNeurons = nn.Neurons
