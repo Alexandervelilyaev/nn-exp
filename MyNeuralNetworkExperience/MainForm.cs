@@ -41,7 +41,7 @@ namespace MyNeuralNetworkExperience
         {
             using (Graphics g = Graphics.FromImage(image))
             {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 using (Pen pen = new Pen(color, 2))
                 {
@@ -75,7 +75,7 @@ namespace MyNeuralNetworkExperience
         {
             using (Graphics g = Graphics.FromImage(image))
             {
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
 
                 using (Pen pen = new Pen(color, 2))
                 {
