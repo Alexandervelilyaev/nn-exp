@@ -39,6 +39,11 @@
             saveButton = new Button();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
+            iterationLabel = new Label();
+            epochLabel = new Label();
+            nameLabel = new Label();
+            createdAtLabel = new Label();
+            updatedAtLabel = new Label();
             mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -62,21 +67,21 @@
             // newToolStripMenuItem
             // 
             newToolStripMenuItem.Name = "newToolStripMenuItem";
-            newToolStripMenuItem.Size = new Size(180, 22);
+            newToolStripMenuItem.Size = new Size(103, 22);
             newToolStripMenuItem.Text = "New";
             newToolStripMenuItem.Click += newToolStripMenuItem_Click;
             // 
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(180, 22);
+            openToolStripMenuItem.Size = new Size(103, 22);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(103, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -96,15 +101,15 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(29, 44);
+            pictureBox1.Location = new Point(12, 54);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1124, 580);
+            pictureBox1.Size = new Size(1141, 570);
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(29, 630);
+            saveButton.Location = new Point(12, 630);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(75, 23);
             saveButton.TabIndex = 2;
@@ -121,11 +126,61 @@
             // 
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             // 
+            // iterationLabel
+            // 
+            iterationLabel.AutoSize = true;
+            iterationLabel.Location = new Point(1052, 33);
+            iterationLabel.Name = "iterationLabel";
+            iterationLabel.Size = new Size(57, 15);
+            iterationLabel.TabIndex = 3;
+            iterationLabel.Text = "Iteration: ";
+            // 
+            // epochLabel
+            // 
+            epochLabel.AutoSize = true;
+            epochLabel.Location = new Point(872, 33);
+            epochLabel.Name = "epochLabel";
+            epochLabel.Size = new Size(46, 15);
+            epochLabel.TabIndex = 4;
+            epochLabel.Text = "Epoch: ";
+            // 
+            // nameLabel
+            // 
+            nameLabel.AutoSize = true;
+            nameLabel.Location = new Point(12, 33);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new Size(45, 15);
+            nameLabel.TabIndex = 5;
+            nameLabel.Text = "Name: ";
+            // 
+            // createdAtLabel
+            // 
+            createdAtLabel.AutoSize = true;
+            createdAtLabel.Location = new Point(344, 33);
+            createdAtLabel.Name = "createdAtLabel";
+            createdAtLabel.Size = new Size(66, 15);
+            createdAtLabel.TabIndex = 6;
+            createdAtLabel.Text = "Created At:";
+            // 
+            // updatedAtLabel
+            // 
+            updatedAtLabel.AutoSize = true;
+            updatedAtLabel.Location = new Point(545, 33);
+            updatedAtLabel.Name = "updatedAtLabel";
+            updatedAtLabel.Size = new Size(70, 15);
+            updatedAtLabel.TabIndex = 7;
+            updatedAtLabel.Text = "Updated At:";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 661);
+            Controls.Add(updatedAtLabel);
+            Controls.Add(createdAtLabel);
+            Controls.Add(nameLabel);
+            Controls.Add(epochLabel);
+            Controls.Add(iterationLabel);
             Controls.Add(saveButton);
             Controls.Add(pictureBox1);
             Controls.Add(mainMenuStrip);
@@ -155,5 +210,10 @@
         private Button saveButton;
         private SaveFileDialog saveFileDialog1;
         private OpenFileDialog openFileDialog1;
+        private Label iterationLabel;
+        private Label epochLabel;
+        private Label nameLabel;
+        private Label createdAtLabel;
+        private Label updatedAtLabel;
     }
 }

@@ -35,7 +35,7 @@ namespace MyNeuralNetworkExperience
 
             NeuralNetwork nn = CreateNetworkBig();
             currentNetwork = nn;
-            VisualizeTopology(nn);
+            VisualizeTopology(currentNetwork);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -59,7 +59,12 @@ namespace MyNeuralNetworkExperience
             {
                 if (isOK)
                 {
-                    // TOOD: Do something
+                    nameLabel.Text = "Name: " + currentNetwork.Name;
+                    createdAtLabel.Text = "Created At: " + currentNetwork.CreatedAt.ToString();
+                    updatedAtLabel.Text = "Updated At: " + currentNetwork.UpdatedAt.ToString();
+                    epochLabel.Text = "Epoch: " + currentNetwork.Epoch.ToString();
+                    iterationLabel.Text = "Iteration: " + currentNetwork.Iteration.ToString();
+                    VisualizeTopology(currentNetwork);
                 }
             }
         }
