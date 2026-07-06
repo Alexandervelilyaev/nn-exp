@@ -367,6 +367,7 @@ namespace MyNeuralNetworkExperience
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.FileName = "neuralNetwork";
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string content = JsonSerializer.Serialize(currentNetwork);
