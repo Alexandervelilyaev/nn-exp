@@ -1,7 +1,5 @@
-using Microsoft.VisualBasic.ApplicationServices;
 using MyNeuralNetworkExperience.Models;
 using System.Drawing.Drawing2D;
-using System.Reflection.Metadata;
 using System.Text.Json;
 
 namespace MyNeuralNetworkExperience
