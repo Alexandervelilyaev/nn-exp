@@ -1,3 +1,4 @@
+using MyNeuralNetworkExperience.Models;
 using System.Drawing.Drawing2D;
 
 namespace MyNeuralNetworkExperience
