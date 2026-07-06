@@ -168,10 +168,7 @@ namespace MyNeuralNetworkExperience
         {
             renderedNeurons = new List<Neuron>();
 
-            // TODO: Move this select to the NeuralNetwork class
-            List<Neuron> inputNeurons = nn.Neurons
-                .Where(n => !nn.Synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
-                .ToList();
+            List<Neuron> inputNeurons = nn.GetInputNeurons();
 
             calculatedHeight = inputNeurons.Count * (radius * 2) + (inputNeurons.Count - 1) * padding;
 

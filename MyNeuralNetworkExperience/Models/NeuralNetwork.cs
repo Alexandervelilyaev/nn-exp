@@ -22,6 +22,15 @@
             Epoch = 0;
         }
 
+        public List<Neuron> GetInputNeurons()
+        {
+            List<Neuron> inputNeurons = Neurons
+                .Where(n => !Synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
+                .ToList();
+
+            return inputNeurons;
+        }
+
         public List<double> ProcessData(List<double> data)
         {
             // TODO: Implement this method
