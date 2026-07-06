@@ -1,11 +1,13 @@
 using MyNeuralNetworkExperience.Models;
 using System.Drawing.Drawing2D;
+using System.Text.Json;
 
 namespace MyNeuralNetworkExperience
 {
     public partial class MainForm : Form
     {
         private List<Neuron> renderedNeurons { get; set; }
+        private NeuralNetwork currentNetwork { get; set; }
         private int calculatedHeight { get; set; }
         private readonly int radius = 20;
         private readonly int padding = 5;
@@ -28,13 +30,43 @@ namespace MyNeuralNetworkExperience
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewForm newForm = new NewForm();
-            newForm.ShowDialog();
+            //NewForm newForm = new NewForm();
+            //newForm.ShowDialog();
+
+            NeuralNetwork nn = CreateNetworkBig();
+            currentNetwork = nn;
+            VisualizeTopology(currentNetwork);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: use openFileDialog
+            bool isOK = true;
+            try
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string jsonString = File.ReadAllText(openFileDialog1.FileName);
+                    NeuralNetwork nn = JsonSerializer.Deserialize<NeuralNetwork>(jsonString);
+                    currentNetwork = nn;
+                }
+            }
+            catch (Exception ex)
+            {
+                isOK = false;
+                Logger.Log("Error on reading neural network: " + ex.Message);
+            }
+            finally
+            {
+                if (isOK)
+                {
+                    nameLabel.Text = "Name: " + currentNetwork.Name;
+                    createdAtLabel.Text = "Created At: " + currentNetwork.CreatedAt.ToString();
+                    updatedAtLabel.Text = "Updated At: " + currentNetwork.UpdatedAt.ToString();
+                    epochLabel.Text = "Epoch: " + currentNetwork.Epoch.ToString();
+                    iterationLabel.Text = "Iteration: " + currentNetwork.Iteration.ToString();
+                    VisualizeTopology(currentNetwork);
+                }
+            }
         }
 
         private void DrawCircle(int x, int y, int radius, Color color, Bitmap image)
@@ -354,10 +386,37 @@ namespace MyNeuralNetworkExperience
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            NeuralNetwork nn = CreateNetworkBig();
-            VisualizeTopology(nn);
+        }
 
-            Console.WriteLine("");
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            bool isOk = true;
+
+            try
+            {
+                saveFileDialog1.FileName = currentNetwork.Name + " - " + DateTime.UtcNow.Date.ToShortDateString();
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string content = JsonSerializer.Serialize(currentNetwork);
+                    File.WriteAllText(saveFileDialog1.FileName, content);
+                }
+            }
+            catch (Exception ex)
+            {
+                isOk = false;
+                Logger.Log("Error on saving neural network: " + ex.Message);
+            }
+            finally
+            {
+                if (isOk)
+                {
+                    MessageBox.Show("Saved");
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong. See log file");
+                }
+            }
         }
     }
 }
