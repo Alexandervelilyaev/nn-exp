@@ -38,7 +38,11 @@ namespace MyNeuralNetworkExperience
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: use openFileDialog
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string jsonString = File.ReadAllText(openFileDialog1.FileName);
+                NeuralNetwork nn = JsonSerializer.Deserialize<NeuralNetwork>(jsonString);
+            }
         }
 
         private void DrawCircle(int x, int y, int radius, Color color, Bitmap image)
