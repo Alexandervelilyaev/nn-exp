@@ -2,6 +2,14 @@
 {
     public class NeuralNetwork
     {
+        public List<Neuron> Neurons { get; set; }
+        public List<Synapse> Synapses { get; set; }
+        public int Iteration { get; set; }
+        public int Epoch { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+
         public NeuralNetwork()
         {
             Neurons = new List<Neuron>();
@@ -14,12 +22,10 @@
             Epoch = 0;
         }
 
-        public List<Neuron> Neurons { get; set; }
-        public List<Synapse> Synapses { get; set; }
-        public int Iteration { get; set; }
-        public int Epoch { get; set; }
-        public string Name { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public List<double> ProcessData(List<double> data)
+        {
+            // TODO: Implement this method
+            return data;
+        }
     }
 }
