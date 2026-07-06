@@ -30,16 +30,37 @@ namespace MyNeuralNetworkExperience
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewForm newForm = new NewForm();
-            newForm.ShowDialog();
+            //NewForm newForm = new NewForm();
+            //newForm.ShowDialog();
+
+            NeuralNetwork nn = CreateNetworkBig();
+            currentNetwork = nn;
+            VisualizeTopology(nn);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            bool isOK = true;
+            try
             {
-                string jsonString = File.ReadAllText(openFileDialog1.FileName);
-                NeuralNetwork nn = JsonSerializer.Deserialize<NeuralNetwork>(jsonString);
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string jsonString = File.ReadAllText(openFileDialog1.FileName);
+                    NeuralNetwork nn = JsonSerializer.Deserialize<NeuralNetwork>(jsonString);
+                    currentNetwork = nn;
+                }
+            }
+            catch (Exception ex)
+            {
+                isOK = false;
+                Logger.Log("Error on reading neural network: " + ex.Message);
+            }
+            finally
+            {
+                if (isOK)
+                {
+                    // TOOD: Do something
+                }
             }
         }
 
@@ -360,21 +381,36 @@ namespace MyNeuralNetworkExperience
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            NeuralNetwork nn = CreateNetworkBig();
-            currentNetwork = nn;
-            VisualizeTopology(nn);
-
-            Console.WriteLine("");
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.FileName = "neuralNetwork";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            bool isOk = true;
+
+            try
             {
-                string content = JsonSerializer.Serialize(currentNetwork);
-                File.WriteAllText(saveFileDialog1.FileName, content);
-                MessageBox.Show("Saved");
+                saveFileDialog1.FileName = currentNetwork.Name + " - " + DateTime.UtcNow.Date.ToShortDateString();
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    string content = JsonSerializer.Serialize(currentNetwork);
+                    File.WriteAllText(saveFileDialog1.FileName, content);
+                }
+            }
+            catch (Exception ex)
+            {
+                isOk = false;
+                Logger.Log("Error on saving neural network: " + ex.Message);
+            }
+            finally
+            {
+                if (isOk)
+                {
+                    MessageBox.Show("Saved");
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong. See log file");
+                }
             }
         }
     }
