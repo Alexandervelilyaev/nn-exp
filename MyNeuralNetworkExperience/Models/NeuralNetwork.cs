@@ -10,5 +10,7 @@
 
         public List<Neuron> Neurons { get; set; }
         public List<Synapse> Synapses { get; set; }
+        public int Iteration { get; set; }
+        public int Epoch { get; set; }
     }
 }
