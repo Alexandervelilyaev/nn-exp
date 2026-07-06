@@ -1,11 +1,15 @@
+using Microsoft.VisualBasic.ApplicationServices;
 using MyNeuralNetworkExperience.Models;
 using System.Drawing.Drawing2D;
+using System.Reflection.Metadata;
+using System.Text.Json;
 
 namespace MyNeuralNetworkExperience
 {
     public partial class MainForm : Form
     {
         private List<Neuron> renderedNeurons { get; set; }
+        private NeuralNetwork currentNetwork { get; set; }
         private int calculatedHeight { get; set; }
         private readonly int radius = 20;
         private readonly int padding = 5;
@@ -355,6 +359,7 @@ namespace MyNeuralNetworkExperience
         private void MainForm_Load(object sender, EventArgs e)
         {
             NeuralNetwork nn = CreateNetworkBig();
+            currentNetwork = nn;
             VisualizeTopology(nn);
 
             Console.WriteLine("");
@@ -362,7 +367,12 @@ namespace MyNeuralNetworkExperience
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string content = JsonSerializer.Serialize(currentNetwork);
+                File.WriteAllText(saveFileDialog1.FileName, content);
+                MessageBox.Show("Saved");
+            }
         }
     }
 }
