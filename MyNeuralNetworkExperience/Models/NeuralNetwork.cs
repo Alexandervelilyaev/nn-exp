@@ -99,10 +99,25 @@
             List<Neuron> hiddenLayerNeurons = GetHiddenLayerNeurons();
 
             int inputCount = Math.Min(data.Count, inputNeurons.Count);
-            for (int i = 0; i < inputCount; i++)
+
+            foreach (Neuron neuron in hiddenLayerNeurons)
             {
-                Neuron inputNeuron = inputNeurons[i];
-                double inputValue = data[i];
+                List<Neuron> previousLayerNeurons = GetPreviousLayerNeurons(neuron);
+                double outputValue = 0;
+                for (int i = 0; i < previousLayerNeurons.Count; i++)
+                {
+                    Neuron previousNeuron = previousLayerNeurons[i];
+                    double inputValue = data[i];
+                    Synapse synapse = Synapses.Where(s => s.SourceId == previousNeuron.Id && s.DestinationId == neuron.Id)
+                        .FirstOrDefault();
+                    if (synapse != null)
+                    {
+                        double weight = synapse.Weight;
+                        outputValue += inputValue * weight;
+                    }
+                }
+
+                outputValues.Add(outputValue);
             }
 
             return outputValues;

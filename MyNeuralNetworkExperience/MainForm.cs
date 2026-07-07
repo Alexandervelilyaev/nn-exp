@@ -419,7 +419,12 @@ namespace MyNeuralNetworkExperience
 
         private void button1_Click(object sender, EventArgs e)
         {
-            currentNetwork.ProcessData(new List<double>());
+            List<double> inputData = new List<double>();
+            inputData.Add(Int32.Parse(textBox1.Text));
+            inputData.Add(Int32.Parse(textBox2.Text));
+            var result = currentNetwork.ProcessData(inputData);
+
+            textBox3.Text = "Test";
         }
     }
 }
