@@ -101,6 +101,11 @@
             }
         }
 
+        private double Sigmoid(double x)
+        {
+            return 1.0 / (1.0 + Math.Pow(Math.E, -x));
+        }
+
         public List<double> ProcessData(List<double> data, int level = 0)
         {
             List<double> outputValues = new List<double>();
