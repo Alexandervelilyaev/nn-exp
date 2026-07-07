@@ -126,7 +126,7 @@
                     }
                 }
 
-                outputValues.Add(outputValue);
+                outputValues.Add(Sigmoid(outputValue));
             }
 
             if (level == 0)
