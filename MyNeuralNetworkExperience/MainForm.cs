@@ -37,6 +37,7 @@ namespace MyNeuralNetworkExperience
             currentNetwork = nn;
             DrawParameters(currentNetwork);
             VisualizeTopology(currentNetwork);
+            testButton.Enabled = true;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -49,6 +50,7 @@ namespace MyNeuralNetworkExperience
                     string jsonString = File.ReadAllText(openFileDialog1.FileName);
                     NeuralNetwork nn = JsonSerializer.Deserialize<NeuralNetwork>(jsonString);
                     currentNetwork = nn;
+                    testButton.Enabled = true;
                 }
             }
             catch (Exception ex)
@@ -424,7 +426,7 @@ namespace MyNeuralNetworkExperience
             inputData.Add(Int32.Parse(textBox2.Text));
             var result = currentNetwork.ProcessData(inputData);
 
-            textBox3.Text = "Test";
+            textBox3.Text = result[0].ToString();
         }
     }
 }

@@ -177,6 +177,7 @@
             // 
             // testButton
             // 
+            testButton.Enabled = false;
             testButton.Location = new Point(843, 109);
             testButton.Name = "testButton";
             testButton.Size = new Size(75, 23);

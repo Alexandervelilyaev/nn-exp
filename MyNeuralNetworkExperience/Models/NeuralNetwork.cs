@@ -80,7 +80,9 @@
             return nextLayerNeurons;
         }
 
-        public List<Neuron> GetHiddenLayerNeurons()
+        // TODO: Reorganize this method
+        // Use the level argument as the level of the neural network
+        public List<Neuron> GetHiddenLayerNeurons(int level)
         {
             List<Neuron> inputNeurons = GetInputNeurons();
             List<Neuron> outputNeurons = GetOutputNeurons();
@@ -89,17 +91,21 @@
                 .Where(n => !inputNeurons.Select(inn => inn.Id).Contains(n.Id) && !outputNeurons.Select(inn => inn.Id).Contains(n.Id))
                 .ToList();
 
-            return hiddenLayerNeurons;
+            if (level == 0)
+            {
+                return hiddenLayerNeurons;
+            }
+            else
+            {
+                return outputNeurons;
+            }
         }
 
-        public List<double> ProcessData(List<double> data)
+        public List<double> ProcessData(List<double> data, int level = 0)
         {
             List<double> outputValues = new List<double>();
-            List<Neuron> inputNeurons = GetInputNeurons();
-            List<Neuron> hiddenLayerNeurons = GetHiddenLayerNeurons();
 
-            int inputCount = Math.Min(data.Count, inputNeurons.Count);
-
+            List<Neuron> hiddenLayerNeurons = GetHiddenLayerNeurons(level);
             foreach (Neuron neuron in hiddenLayerNeurons)
             {
                 List<Neuron> previousLayerNeurons = GetPreviousLayerNeurons(neuron);
@@ -108,16 +114,19 @@
                 {
                     Neuron previousNeuron = previousLayerNeurons[i];
                     double inputValue = data[i];
-                    Synapse synapse = Synapses.Where(s => s.SourceId == previousNeuron.Id && s.DestinationId == neuron.Id)
-                        .FirstOrDefault();
+                    Synapse synapse = Synapses.Where(s => s.SourceId == previousNeuron.Id && s.DestinationId == neuron.Id).FirstOrDefault();
                     if (synapse != null)
                     {
-                        double weight = synapse.Weight;
-                        outputValue += inputValue * weight;
+                        outputValue += inputValue * synapse.Weight;
                     }
                 }
 
                 outputValues.Add(outputValue);
+            }
+
+            if (level == 0)
+            {
+                return ProcessData(outputValues, level + 1);
             }
 
             return outputValues;
