@@ -31,6 +31,15 @@
             return inputNeurons;
         }
 
+        public List<Neuron> GetOutputNeurons()
+        {
+            List<Neuron> outputNeurons = Neurons
+                .Where(n => !Synapses.Select(s => s.SourceId).ToList().Contains(n.Id))
+                .ToList();
+
+            return outputNeurons;
+        }
+
         public List<Synapse> GetSynapsesByNeuron(Neuron neuron)
         {
             List<Synapse> synapses = Synapses
@@ -49,6 +58,18 @@
                 .ToList();
 
             return nextLayerNeurons;
+        }
+
+        public List<Neuron> GetHiddenLayerNeurons()
+        {
+            List<Neuron> inputNeurons = GetInputNeurons();
+            List<Neuron> outputNeurons = GetOutputNeurons();
+
+            List<Neuron> hiddenLayerNeurons = Neurons
+                .Where(n => !inputNeurons.Select(inn => inn.Id).Contains(n.Id) && !outputNeurons.Select(inn => inn.Id).Contains(n.Id))
+                .ToList();
+
+            return hiddenLayerNeurons;
         }
 
         public List<double> ProcessData(List<double> data)
