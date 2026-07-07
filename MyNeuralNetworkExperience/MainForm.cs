@@ -383,6 +383,7 @@ namespace MyNeuralNetworkExperience
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -414,6 +415,11 @@ namespace MyNeuralNetworkExperience
                     MessageBox.Show("Something went wrong. See log file");
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            currentNetwork.ProcessData(new List<double>());
         }
     }
 }

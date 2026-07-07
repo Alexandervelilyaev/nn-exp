@@ -76,6 +76,8 @@
         {
             List<double> outputValues = new List<double>();
             List<Neuron> inputNeurons = GetInputNeurons();
+            List<Neuron> hiddenLayerNeurons = GetHiddenLayerNeurons();
+
             int inputCount = Math.Min(data.Count, inputNeurons.Count);
             for (int i = 0; i < inputCount; i++)
             {

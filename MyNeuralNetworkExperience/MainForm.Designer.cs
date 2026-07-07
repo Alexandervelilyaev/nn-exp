@@ -44,6 +44,7 @@
             nameLabel = new Label();
             createdAtLabel = new Label();
             updatedAtLabel = new Label();
+            button1 = new Button();
             mainMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -171,11 +172,22 @@
             updatedAtLabel.TabIndex = 7;
             updatedAtLabel.Text = "Updated At:";
             // 
+            // button1
+            // 
+            button1.Location = new Point(349, 629);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 8;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 661);
+            Controls.Add(button1);
             Controls.Add(updatedAtLabel);
             Controls.Add(createdAtLabel);
             Controls.Add(nameLabel);
@@ -215,5 +227,6 @@
         private Label nameLabel;
         private Label createdAtLabel;
         private Label updatedAtLabel;
+        private Button button1;
     }
 }
