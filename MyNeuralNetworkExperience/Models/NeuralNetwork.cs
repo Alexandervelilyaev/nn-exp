@@ -40,7 +40,7 @@
             return outputNeurons;
         }
 
-        public List<Synapse> GetSynapsesByNeuron(Neuron neuron)
+        public List<Synapse> GetNextSynapsesByNeuron(Neuron neuron)
         {
             List<Synapse> synapses = Synapses
                 .Where(s => s.SourceId == neuron.Id)
@@ -49,9 +49,29 @@
             return synapses;
         }
 
+        public List<Synapse> GetPreviousSynapsesByNeuron(Neuron neuron)
+        {
+            List<Synapse> synapses = Synapses
+                .Where(s => s.DestinationId == neuron.Id)
+                .ToList();
+
+            return synapses;
+        }
+
+        public List<Neuron> GetPreviousLayerNeurons(Neuron neuron)
+        {
+            var synapses = GetPreviousSynapsesByNeuron(neuron);
+
+            List<Neuron> previousLayerNeurons = Neurons
+                .Where(n => synapses.Select(s => s.SourceId).ToList().Contains(n.Id))
+                .ToList();
+
+            return previousLayerNeurons;
+        }
+
         public List<Neuron> GetNextLayerNeurons(Neuron neuron)
         {
-            var synapses = GetSynapsesByNeuron(neuron);
+            var synapses = GetNextSynapsesByNeuron(neuron);
 
             List<Neuron> nextLayerNeurons = Neurons
                 .Where(n => synapses.Select(s => s.DestinationId).ToList().Contains(n.Id))
